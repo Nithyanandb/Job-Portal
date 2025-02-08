@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "job_seeker_profile")
 public class JobSeekerProfile {
 
     @Id
@@ -15,8 +16,8 @@ public class JobSeekerProfile {
     @MapsId
     private Users userId;
 
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private String city;
     private String state;
     private String country;
@@ -26,14 +27,19 @@ public class JobSeekerProfile {
 
     private String profilePhoto;
 
-    @OneToMany(targetEntity = Skills.class, mappedBy = "JobSeekerProfile",cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Skills.class,cascade = CascadeType.ALL, mappedBy = "jobSeekerProfile")
     private List<Skills> skills;
 
-    public JobSeekerProfile(int userAccountId, Users userId, String firstname, String lastname, String city, String state, String country, String workAuthorization, String employmentType, String resume, String profilePhoto, List<Skills> skills) {
+    public JobSeekerProfile(Users userId) {
+        this.userId = userId;
+    }
+
+
+    public JobSeekerProfile(int userAccountId, Users userId, String firstName, String lastName, String city, String state, String country, String workAuthorization, String employmentType, String resume, String profilePhoto, List<Skills> skills) {
         this.userAccountId = userAccountId;
         this.userId = userId;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.city = city;
         this.state = state;
         this.country = country;
@@ -42,6 +48,10 @@ public class JobSeekerProfile {
         this.resume = resume;
         this.profilePhoto = profilePhoto;
         this.skills = skills;
+    }
+
+    public JobSeekerProfile() {
+
     }
 
     public int getUserAccountId() {
@@ -60,20 +70,20 @@ public class JobSeekerProfile {
         this.userId = userId;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getCity() {
@@ -145,8 +155,8 @@ public class JobSeekerProfile {
         return "JobSeekerProfile{" +
                 "userAccountId=" + userAccountId +
                 ", userId=" + userId +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
                 ", country='" + country + '\'' +
