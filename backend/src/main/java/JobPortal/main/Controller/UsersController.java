@@ -59,7 +59,7 @@ public class UsersController {
             return "register";
         }
         usersService.addNew(users);
-            return "redirect:/dashboard";
+            return "dashboard";
     }
 
     @GetMapping("/login")
@@ -67,6 +67,7 @@ public class UsersController {
         return "login";
     }
 
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication!= null)
